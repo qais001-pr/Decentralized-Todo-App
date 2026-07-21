@@ -1,6 +1,6 @@
 require("dotenv").config();
 const express = require("express");
-const port = process.env.PORT;
+const port = process.env.PORT || 3001;
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -15,7 +15,7 @@ app.use("/auth/users", userRouter);
 app.use("/items", itemsRouter);
 
 mongoose
-  .connect(process.env.URI)
+  .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("Databse connected successfully");
     app.listen(port, () => {

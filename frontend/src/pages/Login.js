@@ -68,7 +68,7 @@ const Login = () => {
 
       // Sign the nonce
       const signature = await signMessage(nonce);
-      
+
       // Verify the signed message with the server
       const loginResponse = await fetch("http://localhost:3001/auth/users/wallet-login", {
         method: "POST",
