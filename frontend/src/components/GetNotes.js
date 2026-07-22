@@ -8,7 +8,7 @@ import { userContext } from "../context/userContext/userContext";
 
 const GetNotes = () => {
   const { web3, account } = useWeb3();
-  const {user}=useContext(userContext)
+  const { user } = useContext(userContext)
   const [userNotes, setUserNotes] = useState([]);
   const [inputFields, setInputFields] = useState({
     id: "",
@@ -34,7 +34,8 @@ const GetNotes = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:3001/items`, {
+      const API = process.env.REACT_APP_API_URL;
+      const response = await fetch(`${API}/items`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

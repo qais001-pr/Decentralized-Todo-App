@@ -26,7 +26,8 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const fetchData = await fetch("http://localhost:3001/auth/users/login", {
+      const API = process.env.REACT_APP_API_URL;
+      const fetchData = await fetch(`${API}/auth/users/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -49,8 +50,9 @@ const Login = () => {
 
   const handleWalletLogin = async () => {
     try {
+      const API = process.env.REACT_APP_API_URL;
       // Request nonce from server
-      const nonceResponse = await fetch("http://localhost:3001/auth/users/wallet-login", {
+      const nonceResponse = await fetch(`${API}/auth/users/wallet-login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -70,7 +72,7 @@ const Login = () => {
       const signature = await signMessage(nonce);
 
       // Verify the signed message with the server
-      const loginResponse = await fetch("http://localhost:3001/auth/users/wallet-login", {
+      const loginResponse = await fetch(`${API}/auth/users/wallet-login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
