@@ -26,4 +26,4 @@ spec:
             - configMapRef:
                 name: web-app-config
           ports:
-            - containerPort: 3000
+            - containerPort: 80
