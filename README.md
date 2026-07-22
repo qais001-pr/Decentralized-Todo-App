@@ -88,8 +88,9 @@ npm install
 <b>Backend:</b> Create a `.env` file in the `backend` directory with the following variables:
 ```
 
-MONGO_URI=mongodb://localhost:27017/your-database
-JWT_SECRET=your-jwt-secret
+MONGO_URI=mongodb://admin:password@localhost:27017/Todo_App?authSource=admin
+SECRET_KEY=fmwe21s21wqwd
+PORT=3001
 
 ```
 
@@ -116,7 +117,7 @@ cd frontend
 npm start
 
 ```
-The backend server will be running on  `http://localhost:3001`, and the frontend application will be accessible at `http://localhost:3000`.
+The backend server will be running on  `http://localhost:5000`, and the frontend application will be accessible at `http://localhost:3000`.
 
 ## Usage Guide
 ### 1. Register a New User
