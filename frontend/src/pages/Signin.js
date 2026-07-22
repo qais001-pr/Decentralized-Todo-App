@@ -21,16 +21,14 @@ const Signin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const fetchData = await fetch(
-        "http://localhost:3001/auth/users/register/newUser",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(inputFields),
-        }
-      );
+      const API = process.env.REACT_APP_API_URL;
+      const fetchData = await fetch(`${API}/auth/users/register/newUser`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(inputFields),
+      });
       const data = await fetchData.json();
       console.log(data);
       if (!fetchData.ok) {

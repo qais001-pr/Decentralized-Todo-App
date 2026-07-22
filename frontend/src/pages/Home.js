@@ -36,10 +36,10 @@ const Home = () => {
         </>
       ) : (
         <div className="container mt-5 ms-5 text-secondary">
-        <h1>
-          You are not a authenticate user so first login or register then you
-          are access notes
-        </h1>
+          <h1>
+            You are not a authenticate user so first login or register then you
+            are access notes
+          </h1>
         </div>
       )}
     </>

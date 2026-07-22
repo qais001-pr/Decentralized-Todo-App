@@ -26,8 +26,9 @@ const Notes = ({ setshowCreateNotes, setshowGetNotes }) => {
     }
     const { email } = user;
     try {
+      const API = process.env.REACT_APP_API_URL;
       const response = await fetch(
-        "http://localhost:3001/items/createItems/newItem",
+        `${API}/items/createItems/newItem`,
         {
           method: "POST",
           headers: {

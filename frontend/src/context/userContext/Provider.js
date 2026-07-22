@@ -14,8 +14,10 @@ const Provider = ({ children }) => {
 
   useEffect(() => {
     const getUser = async () => {
+
       try {
-        const fetchUser = await fetch("http://localhost:3001/auth/users/getUser", {
+        const API = process.env.REACT_APP_API_URL;
+        const fetchUser = await fetch(`${API}/auth/users/getUser`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,

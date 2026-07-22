@@ -18,8 +18,9 @@ const UpdateNotes = ({ inputFields, setInputFields, setUserNotes }) => {
       return;
     }
     try {
+      const API = process.env.REACT_APP_API_URL;
       const response = await fetch(
-        `http://localhost:3001/items/updateItem/${inputFields.id}`,
+        `${API}/items/updateItem/${inputFields.id}`,
         {
           method: "PUT",
           headers: {
