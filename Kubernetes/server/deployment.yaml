@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: server
+
+  template:
+    metadata:
+      labels:
+        app: server
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: k8s-worker
+      containers:
+        - name: server
+          image: qais001/todo-server-app:1.0.0
+          resources:
+            requests:
+              cpu: "200m"
+              memory: "128Mi"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 5000
+          envFrom:
+            - configMapRef:
+                name: server-config
