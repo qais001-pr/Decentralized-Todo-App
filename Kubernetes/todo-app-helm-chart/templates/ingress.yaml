@@ -1,0 +1,28 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: todo-app
+  labels:
+    app.kubernetes.io/name: todo-app
+spec:
+  ingressClassName: {{ .Values.ingress.className }}
+  rules:
+    - host: {{ .Values.ingress.host }}
+      http:
+        paths:
+          - path: {{ .Values.ingress.server.path }}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Values.ingress.server.serviceName }}
+                port:
+                  number: {{ .Values.ingress.server.servicePort }}
+          - path: {{ .Values.ingress.client.path }}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Values.ingress.client.serviceName }}
+                port:
+                  number: {{ .Values.ingress.client.servicePort }}
+{{- end }}

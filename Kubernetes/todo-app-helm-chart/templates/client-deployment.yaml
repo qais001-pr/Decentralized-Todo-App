@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client
+spec:
+  replicas: {{ .Values.client.replicaCount }}
+
+  selector:
+    matchLabels:
+      app: client
+
+  template:
+    metadata:
+      labels:
+        app: client
+
+    spec:
+      nodeSelector: {{- toYaml .Values.client.nodeSelector | nindent 8 }}
+
+      containers:
+        - name: web-app
+
+          image: "{{ .Values.client.image.repository }}:{{ .Values.client.image.tag }}"
+          imagePullPolicy: {{ .Values.client.image.pullPolicy }}
+
+          ports:
+            - containerPort: {{ .Values.client.service.targetPort }}
+
+          resources: {{- toYaml .Values.client.resources | nindent 12 }}

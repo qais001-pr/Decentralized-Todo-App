@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: server-config
+data:
+  MONGO_URI: {{ .Values.server.config.mongoURI | quote }}
+  SECRET_KEY: {{ .Values.server.config.secretKey | quote }}
+  PORT: {{ .Values.server.config.port | quote }}

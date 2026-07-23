@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mongodb-pv
+spec:
+  capacity:
+    storage: {{ .Values.mongodb.persistence.storage }}
+  volumeMode: Filesystem
+  accessModes:
+    - {{ .Values.mongodb.persistence.accessMode }}
+  persistentVolumeReclaimPolicy: {{ .Values.mongodb.persistence.reclaimPolicy }} 
+  storageClassName: {{ .Values.mongodb.persistence.storageClassName }}
+
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node-role
+              operator: In
+              values:
+                - {{ index .Values.mongodb.nodeSelector "node-role" }}
+
+  hostPath:
+    path: {{ .Values.mongodb.persistence.hostPath.path }}
+    type: {{ .Values.mongodb.persistence.hostPath.type }}
