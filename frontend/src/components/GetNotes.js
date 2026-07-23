@@ -79,15 +79,13 @@ const GetNotes = () => {
       return;
     }
     try {
-      const response = await fetch(
-        `http://localhost:3001/items/deleteItem/${notes._id}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const API = process.env.REACT_APP_API_URL;
+      const response = await fetch(`${API}/items/deleteItem/${notes._id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       if (response.status === 401) {
         expiredToken(response);
       } else {
