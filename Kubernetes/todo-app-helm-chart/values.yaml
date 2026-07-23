@@ -1,0 +1,108 @@
+client:
+  replicaCount: 1
+
+  nodeSelector:
+    node-role: application
+
+  image:
+    repository: qais001/todo-web-app
+    tag: v5.0.0
+    pullPolicy: IfNotPresent
+
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: 80
+
+  resources:
+    requests:
+      cpu: "200m"
+      memory: "128Mi"
+    limits:
+      cpu: "500m"
+      memory: "512Mi"
+
+mongodb:
+  replicaCount: 1
+
+  nodeSelector:
+    node-role: application
+
+  image:
+    repository: mongo
+    tag: "7"
+    pullPolicy: IfNotPresent
+
+  database:
+    name: Todo_App
+    username: admin
+    password: password
+
+  service:
+    clusterIP: None
+    port: 27017
+    targetPort: 27017
+
+  persistence:
+    storageClassName: local-storage
+    storage: 10Gi
+    accessMode: ReadWriteOnce
+    reclaimPolicy: Retain
+
+    hostPath:
+      path: /data/mongodb
+      type: DirectoryOrCreate
+
+  mountPath: /data/db
+
+
+
+server: 
+  replicaCount: 1
+  nodeSelector: 
+    node-role: application
+  image:
+   repository: qais001/todo-server-app
+   tag: "1.0.0"
+   pullPolicy: IfNotPresent
+  service: 
+    type: ClusterIP
+    port: 5000
+    targetPort: 5000
+  config: 
+    mongoURI: "mongodb://admin:password@mongodb-service:27017/Todo_App?authSource=admin" 
+    secretKey: "fmwe21s21wqwd"
+    port: "5000"
+  resources:
+    requests:
+      cpu: "200m"
+      memory: "128Mi"
+    limits:
+      cpu: "500m"
+      memory: "256Mi"
+
+
+
+hpa:
+  enabled: true
+
+  server:
+    targetDeployment: server
+
+    minReplicas: 3
+    maxReplicas: 10
+
+    targetCPUUtilizationPercentage: 40
+
+ingress: 
+    enabled: true
+    className: nginx
+    host: todo.app.local
+    client:
+      serviceName: client-service 
+      servicePort: 80
+      path: / 
+    server: 
+      serviceName: server-service
+      servicePort: 5000 
+      path: /api
