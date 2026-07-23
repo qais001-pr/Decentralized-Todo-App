@@ -3,29 +3,30 @@ kind: Deployment
 metadata:
   name: server
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: server
+
   template:
     metadata:
       labels:
         app: server
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: k8s-worker
       containers:
         - name: server
-          image: qais001/todo-server-app
+          image: qais001/todo-server-app:1.0.0
           resources:
+            requests:
+              cpu: "200m"
+              memory: "128Mi"
             limits:
               memory: "256Mi"
               cpu: "500m"
-            requests:
-              memory: "128Mi"
-              cpu: "200m"
+          ports:
+            - containerPort: 5000
           envFrom:
             - configMapRef:
                 name: server-config
-            - secretRef:
-                name: server-secret
-
-          ports:
-            - containerPort: 5000

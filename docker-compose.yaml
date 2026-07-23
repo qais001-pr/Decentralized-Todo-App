@@ -7,11 +7,11 @@ services:
       - "27017:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: admin
-    networks:
-      - decentralized-todo-app_default
+      MONGO_INITDB_ROOT_PASSWORD: password
     volumes:
       - todo_data:/data/db
+    networks:
+      - decentralized-todo-app_default
 
   backend:
     build: ./backend
@@ -20,13 +20,13 @@ services:
     ports:
       - "5000:5000"
     environment:
-      MONGO_URI: mongodb://admin:admin@database:27017/Todo_App?authSource=admin
+      MONGO_URI: mongodb://admin:password@database:27017/todo?authSource=admin
       SECRET_KEY: fmwe21s21wqwd
       PORT: 5000
-    networks:
-      - decentralized-todo-app_default
     depends_on:
       - database
+    networks:
+      - decentralized-todo-app_default
 
   web-app:
     build: ./frontend
@@ -36,10 +36,10 @@ services:
       - "3000:80"
     environment:
       REACT_APP_API_URL: http://localhost:5000
-    networks:
-      - decentralized-todo-app_default
     depends_on:
       - backend
+    networks:
+      - decentralized-todo-app_default
 
 networks:
   decentralized-todo-app_default:

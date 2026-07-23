@@ -1,29 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: web-app
+  name: client
 spec:
-  replicas: 1
   selector:
     matchLabels:
-      app: web-app
+      app: client
   template:
     metadata:
       labels:
-        app: web-app
+        app: client
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: k8s-worker
       containers:
         - name: web-app
-          image: qais001/todo-web-app:latest
+          image: qais001/todo-web-app:v5.0.0
           resources:
-            limits:
-              cpu: 500m
-              memory: 512Mi
             requests:
-              cpu: 250m
-              memory: 256Mi
-          envFrom:
-            - configMapRef:
-                name: web-app-config
+              cpu: "200m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
           ports:
             - containerPort: 80

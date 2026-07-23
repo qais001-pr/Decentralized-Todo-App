@@ -11,8 +11,8 @@ const itemsRouter = require("./router/items/itemsRouter");
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use("/auth/users", userRouter);
-app.use("/items", itemsRouter);
+app.use("/api/auth/users", userRouter);
+app.use("/api/items", itemsRouter);
 
 mongoose
   .connect(process.env.MONGO_URI)

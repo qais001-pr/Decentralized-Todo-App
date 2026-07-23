@@ -1,10 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: web-app-service
+  name: client-service
 spec:
+  type: ClusterIP
   selector:
-    app: web-app
+    app: client
   ports:
     - port: 80
       targetPort: 80
